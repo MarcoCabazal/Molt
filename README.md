@@ -191,7 +191,7 @@ Note that generating a new module will never touch your Xcode project, but it's 
 3. You'll notice there aren't any mention of segues here, but Storyboards and Scenes are in. 
 4. The template makes use of some Swift extensions, all of which are made available in `.molt/swift_helpers`
 
-To appreciate, please see the sample rendered source code for [Friends](https://github.com/darthmarku/molt/blob/development/sample_output).
+To appreciate, please see the sample rendered source code for [Friends](https://github.com/MarcoCabazal/Molt/tree/development/sample_output).
 
 ### TODOs
 
