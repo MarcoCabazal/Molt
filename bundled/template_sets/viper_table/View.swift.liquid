@@ -1,0 +1,60 @@
+//
+//  {{ module_name }}View.swift
+{% include 'header' %}
+import UIKit
+
+class {{ module_name }}View: UIViewController {
+
+  var presenter: {{ module_name }}PresenterProtocol?
+
+  @IBOutlet weak var tableView: UITableView!
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    tableView.tableFooterView = UIView()
+    tableView.register({{ entity}}Cell.nib, forCellReuseIdentifier: {{ entity}}Cell.id)
+    presenter?.viewDidLoad()
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    if let selectedRow = tableView.indexPathForSelectedRow {
+      tableView.deselectRow(at: selectedRow, animated: true)
+    }
+  }
+}
+
+// MARK: CALLED BY PRESENTER
+extension {{ module_name }}View: {{ module_name }}ViewProtocol {
+
+  func render() {
+    tableView.reloadData()
+  }
+}
+
+// MARK: UITABLEVIEW DATASOURCE
+extension {{ module_name }}View: UITableViewDataSource {
+
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return presenter?.numberOfRows(in: section) ?? 0
+  }
+
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard let content = presenter?.content(at: indexPath.row),
+      let cell = tableView.dequeueReusableCell(withIdentifier: {{ entity}}Cell.id, for: indexPath) as? {{ entity}}Cell else {
+        return tableView.dequeueReusableCell(withIdentifier: {{ entity}}Cell.id, for: indexPath)
+    }
+
+    cell.configure(with: content)
+    return cell
+  }
+}
+
+// MARK: UITABLEVIEW DELEGATE
+extension {{ module_name }}View: UITableViewDelegate {
+
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    guard let content = presenter?.content(at: indexPath.row) else { return }
+    presenter?.process(object: content)
+  }
+}

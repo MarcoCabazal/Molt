@@ -1,0 +1,56 @@
+
+defaults: &defaults
+  environment:
+    TZ: "/usr/share/zoneinfo/Asia/Manila"
+  working_directory: ~/molt
+  docker:
+    - image: ruby:2.4.3
+
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: magnitude-{{ checksum "Gemfile.lock" }}
+
+      - run:
+          name: Installing App Bundle
+          command: |
+            gem install bundler
+            bundle install --path vendor/bundle
+
+      - save_cache:
+          key: molt-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      - run:
+          name: Running RSpec
+          command: bundle exec rspec
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - build
+      - alpha:
+          filters:
+            branches:
+              only: alpha
+          requires:
+            - build
+      - beta:
+          filters:
+            branches:
+              only: beta
+          requires:
+            - build
+      - production:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build

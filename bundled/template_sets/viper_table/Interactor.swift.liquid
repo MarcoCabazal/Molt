@@ -1,0 +1,48 @@
+//
+//  {{ module_name }}Interactor.swift
+{% include 'header' %}
+final class {{ module_name }}Interactor {
+  weak var presenter: {{ module_name }}InteractorOutputProtocol?
+  var localDataManager: {{ module_name }}LocalDataManagerProtocol?
+  var remoteDataManager: {{ module_name }}RemoteDataManagerProtocol?
+}
+
+// MARK: CALLED BY PRESENTER
+extension {{ module_name }}Interactor: {{ module_name }}InteractorProtocol {
+
+  func retrieveData() {
+    localDataManager?.retrieveDataFromStorage().then({ [weak self] persistedData in
+      let data: [{{ model }}] = persistedData.map {
+        return {{ model }}(id: Int($0.id), title: $0.title ?? "", dueDate: $0.dueDate)
+      }
+
+      if !data.isEmpty {
+        self?.presenter?.present(data: data)
+      } else {
+        self?.retrieveDataFromAPI()
+      }
+    }).catch({ [weak self] error in
+      self?.presenter?.present(error: error)
+    })
+  }
+}
+
+extension {{ module_name }}Interactor {
+
+  fileprivate func retrieveDataFromAPI() {
+    remoteDataManager?.retrieveDataFromAPI().then({ [weak self] data in
+      self?.persist(data: data)
+      self?.presenter?.present(data: data)
+    }).catch({ [weak self] error in
+      self?.presenter?.present(error: error)
+    })
+  }
+
+  fileprivate func persist(data: [{{ model }}]) {
+    for item in data {
+      localDataManager?.saveEntity(id: item.id, title: item.title).catch({ [weak self] error in
+        self?.presenter?.present(error: error)
+      })
+    }
+  }
+}

@@ -1,0 +1,25 @@
+//
+//  {{ module_name }}View.swift
+{% include 'header' %}
+import UIKit
+
+class {{ module_name }}View: UIViewController {
+
+  var presenter: {{ module_name }}PresenterProtocol?
+
+  @IBOutlet weak var titleLabel: UILabel!
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    presenter?.viewDidLoad()
+  }
+}
+
+// MARK: CALLED BY PRESENTER
+extension {{ module_name }}View: {{ module_name }}ViewProtocol {
+
+  func render(content: {{ model }}?) {
+    guard let content = content else { return }
+    titleLabel?.text = content.title
+  }
+}

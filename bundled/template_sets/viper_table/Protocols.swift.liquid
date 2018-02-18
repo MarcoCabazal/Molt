@@ -1,0 +1,58 @@
+//
+//  {{ module_name }}Protocols.swift
+{% include 'header' %}
+import UIKit
+import Hydra
+
+// MARK: Called by VIEW -> Implemented BY PRESENTER
+protocol {{ module_name }}PresenterProtocol: class {
+  var view: {{ module_name }}ViewProtocol? { get set }
+  var wireFrame: {{ module_name }}WireFrameProtocol? { get set }
+  var interactor: {{ module_name }}InteractorProtocol? { get set }
+
+  func viewDidLoad()
+
+  // datasource
+  var numberOfSection: Int { get }
+  func numberOfRows(in section: Int) -> Int
+  func content(at row: Int) -> <{{ model }}>?
+
+  func process(object: {{ model }})
+}
+
+// MARK: PRESENTER -> INTERACTOR
+protocol {{ module_name }}InteractorProtocol: class {
+  var presenter: {{ module_name }}InteractorOutputProtocol? { get set }
+  var localDataManager: {{ module_name }}LocalDataManagerProtocol? { get set }
+  var remoteDataManager: {{ module_name }}RemoteDataManagerProtocol? { get set }
+
+  func retrieveData()
+}
+
+// MARK: INTERACTOR -> REMOTEDATAMANAGER
+protocol {{ module_name }}RemoteDataManagerProtocol: class {
+  func retrieveDataFromAPI() -> Promise<[{{ model }}]>
+}
+
+// MARK: INTERACTOR -> LOCALDATAMANAGER
+protocol {{ module_name }}LocalDataManagerProtocol: class {
+  func retrieveDataFromStorage() -> Promise<[{{ entity }}]>
+  func saveEntity(id: Int, title: String) -> Promise<Void>
+}
+
+// MARK: INTERACTOR -> PRESENTER
+protocol {{ module_name }}InteractorOutputProtocol: class {
+  func present(data: [{{ model }}])
+  func present(error: Error)
+}
+
+// MARK: PRESENTER -> VIEW
+protocol {{ module_name }}ViewProtocol: Loadable {
+  func render()
+}
+
+// MARK: PRESENTER -> WIREFRAME
+protocol {{ module_name }}WireFrameProtocol: class {
+  static func prepareModule() -> UIViewController
+  func navigate(to object: {{ model }}, from view: {{ module_name }}ViewProtocol)
+}

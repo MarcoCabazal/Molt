@@ -1,0 +1,45 @@
+//
+//  {{ module_name }}LocalDataManager.swift
+{% include 'header' %}
+import CoreData
+import Hydra
+
+// MARK: CALLED BY INTERACTOR
+class {{ module_name }}LocalDataManager: {{ module_name }}LocalDataManagerProtocol {
+
+  func retrieveDataFromStorage() -> Promise<[{{ entity }}]>  {
+    return Promise<[{{ entity }}]>(in: .main) { resolve, reject, _ in
+      guard let moc = CoreDataStore.moc else {
+        reject(PersistenceError.mocNotFound)
+        return
+      }
+      do {
+        let request: NSFetchRequest<{{ entity }}> = NSFetchRequest(entityName: {{ entity }}.id)
+        resolve(try moc.fetch(request))
+      } catch {
+        reject(PersistenceError.objectNotFound)
+      }
+    }
+  }
+
+  func saveEntity(id: Int, title: String) -> Promise<Void> {
+    return Promise<Void>(in: .main) { resolve, reject, _ in
+      guard let moc = CoreDataStore.moc else {
+        reject(PersistenceError.mocNotFound)
+        return
+      }
+
+      do {
+        if let entity = NSEntityDescription.entity(forEntityName: {{ entity }}.id, in: moc) {
+          let object = {{ entity }}(entity: entity, insertInto: moc)
+          object.id = Int32(id)
+          object.title = title
+          try moc.save()
+          resolve(())
+        }
+      } catch {
+        reject(PersistenceError.couldNotSaveObject)
+      }
+    }
+  }
+}

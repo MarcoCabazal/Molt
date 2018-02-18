@@ -1,0 +1,21 @@
+//
+//  {{ module_name }}WireFrame.swift
+{% include 'header' %}
+import UIKit
+
+final class {{ module_name }}WireFrame: {{ module_name }}WireFrameProtocol {
+
+  static func prepareModule(with object: {{ model }}) -> UIViewController {
+    let view = {{ module_name }}View.instantiate(from: .main)
+
+    let presenter: {{ module_name }}PresenterProtocol = {{ module_name }}Presenter()
+    let wireFrame = {{ module_name }}WireFrame()
+
+    view.presenter = presenter
+    presenter.view = view
+    presenter.dataSource = object
+    presenter.wireFrame = wireFrame
+
+    return view
+  }
+}

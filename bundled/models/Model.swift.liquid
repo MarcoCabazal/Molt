@@ -1,0 +1,20 @@
+//
+//  {{ model }}.swift
+{% include 'header' %}
+import Foundation
+import ObjectMapper
+
+struct {{ model }} {
+  var id = 0
+  var title = ""
+}
+
+extension {{ model }}: Mappable {
+
+  init?(map: Map) { }
+
+  mutating func mapping(map: Map) {
+    id        <- map["id"]
+    title     <- map["title"]
+  }
+}

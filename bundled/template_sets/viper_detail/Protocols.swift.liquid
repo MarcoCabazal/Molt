@@ -1,0 +1,23 @@
+//
+//  {{ module_name }}Protocols.swift
+{% include 'header' %}
+import UIKit
+
+// MARK: Called by VIEW -> Implemented BY PRESENTER
+protocol {{ module_name }}PresenterProtocol: class {
+  weak var view: {{ module_name }}ViewProtocol? { get set }
+  weak var wireFrame: {{ module_name }}WireFrameProtocol? { get set }
+  var dataSource: {{ model }}? { get set }
+
+  func viewDidLoad()
+}
+
+// MARK: PRESENTER -> VIEW
+protocol {{ module_name }}ViewProtocol: Loadable {
+  func render(content: {{ model }}?)
+}
+
+// MARK: PRESENTER -> WIREFRAME
+protocol {{ module_name }}WireFrameProtocol: class {
+  static func prepareModule(with object: {{ model }}) -> UIViewController
+}

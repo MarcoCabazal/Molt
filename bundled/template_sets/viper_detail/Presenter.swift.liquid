@@ -1,0 +1,17 @@
+//
+//  {{ module_name }}Interactor.swift
+{% include 'header' %}
+final class {{ module_name }}Presenter {
+
+  weak var view: {{ module_name }}ViewProtocol?
+  var wireFrame: {{ module_name }}WireFrameProtocol?
+  var dataSource: {{ model }}?
+}
+
+// MARK: CALLED BY VIEW
+extension {{ module_name }}Presenter: {{ module_name }}PresenterProtocol {
+
+  func viewDidLoad() {
+    view?.render(content: dataSource)
+  }
+}

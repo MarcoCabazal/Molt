@@ -1,0 +1,49 @@
+//
+//  {{ module_name }}Presenter.swift
+{% include 'header' %}
+final class {{ module_name }}Presenter {
+
+  weak var view: {{ module_name }}ViewProtocol?
+  var wireFrame: {{ module_name }}WireFrameProtocol?
+  var interactor: {{ module_name }}InteractorProtocol?
+  var dataSource: [{{ model }}] = []
+}
+
+// MARK: CALLED BY VIEW
+extension {{ module_name }}Presenter: {{ module_name }}PresenterProtocol {
+
+  func viewDidLoad() {
+    view?.showLoadingIndicator()
+    interactor?.retrieveData()
+  }
+
+  var numberOfSection: Int { return self.dataSource.count + 1  }
+
+  func numberOfRows(in section: Int) -> Int {
+    return dataSource.count
+  }
+
+  func content(at row: Int) -> {{ model }}? {
+    return dataSource[row]
+  }
+
+  func process(object: {{ model }}) {
+    guard let view = view else { return }
+    wireFrame?.navigate(to: object, from: view)
+  }
+}
+
+// MARK: CALLED BY INTERACTOR
+extension {{ module_name }}Presenter: {{ module_name }}InteractorOutputProtocol {
+
+  func present(data: [{{ model }}]) {
+    self.dataSource = data
+    view?.hideLoadingIndicator()
+    view?.render()
+  }
+
+  func present(error: Error) {
+    view?.hideLoadingIndicator()
+    view?.show(error: error)
+  }
+}

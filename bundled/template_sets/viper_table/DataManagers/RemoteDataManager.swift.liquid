@@ -1,0 +1,26 @@
+//
+//  {{ module_name }}RemoteDataManager.swift
+{% include 'header' %}
+import Alamofire
+import AlamofireObjectMapper
+import Hydra
+
+// MARK: CALLED BY INTERACTOR
+class {{ module_name }}RemoteDataManager: {{ module_name }}RemoteDataManagerProtocol {
+
+  func retrieveDataFromAPI() -> Promise<[{{ model }}]> {
+    return Promise<[{{ model }}]>(in: .background) { resolve, reject, _ in
+      Alamofire.request(APIRouter.{{ model | downcase }})
+        .validate()
+        .responseArray(keyPath: "{{ model | downcase }}") { (response: DataResponse<[{{ model }}]>) in
+
+          switch response.result {
+          case .success(let data):
+            resolve(data)
+          case .failure:
+            reject(APIError.unknown)
+          }
+      }
+    }
+  }
+}

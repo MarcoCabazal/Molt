@@ -1,0 +1,15 @@
+//
+//  {{ entity }}+CoreData.swift
+{% include 'header' %}
+import Foundation
+import CoreData
+
+extension {{ entity }} {
+
+  @nonobjc public class func fetchRequest() -> NSFetchRequest<{{ entity }}> {
+    return NSFetchRequest<{{ entity }}>(entityName: {{ entity }}.id)
+  }
+
+  @NSManaged public var id: Int32
+  @NSManaged public var title: String?
+}
