@@ -58,7 +58,7 @@ You should customize this with your information before you proceed with generati
 
 On the other hand, to setup per-project configuration, go to your project's root folder, then:
 
-    $ molt setup_project
+    $ molt setup:project
     create  .molt
     create  .molt/models/Entity+CoreData.swift.liquid
     create  .molt/models/Entity.swift.liquid
@@ -173,15 +173,14 @@ Note that generating a new module will never touch your Xcode project, but it's 
       molt create_module MODULE_NAME TEMPLATE_SET
 
     Options:
-          [--name=NAME]
-          [--email=EMAIL]
-          [--company=COMPANY]
-          [--project=PROJECT]
-          [--model=MODEL]                        # if not supplied, xcode placeholders will instead be used
-          [--create-model], [--no-create-model]  # creates corresponding Mappable struct (ObjectMapper) and Core Data entity; requires --model to be set
-          [--output-folder=OUTPUT_FOLDER]        # create module folder in this directory
-                                                 # Default: .
-      -f, [--do-it], [--no-do-it]                # Release the Kraken and write the files
+        --name NAME                # Author name
+        --email EMAIL              # Author email
+        -company COMPANY           # Author company
+        -project PROJECT           # Project name
+        -output-folder DIRECTORY   # Create module folder in this directory. Defaults to "./"
+        -model MODEL               # Model name. If unspecified, Xcode placeholders will be used instead
+        -create-model              # If specified, it creates corresponding Mappable struct (ObjectMapper) and Core Data entity; requires --model to be set
+        -do-it                     # Release the Kraken and write the files
 
 ### Notes about the bundled `viper_table` template set
 

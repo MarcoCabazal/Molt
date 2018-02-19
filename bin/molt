@@ -2,4 +2,5 @@
 
 require "molt"
 
-Molt::CLI::Main.start(ARGV)
+Molt::CLI::Main.start
+

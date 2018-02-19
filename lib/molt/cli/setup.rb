@@ -1,33 +1,23 @@
+require "thor"
+
 module Molt::CLI
-  class Main < Thor
+  class Setup < Thor
     include Thor::Actions
 
     def self.source_root
-      File.dirname "."
+      File.dirname(".")
     end
 
-    desc "setup", "Setup global config and templates in ~/.molt (HOME)"
-    def setup
-      config = Molt::Configuration.defaults_from_git_config
-      copy_templates_to_home config if !Dir.exist? Molt::MOLT_GLOBAL
-    end
+    desc "perform", "perform"
+    def perform(molt_path, config_path)
+      config = molt_path == Molt::MOLT_GLOBAL ? Molt::Configuration.defaults_from_git_config : Molt::Configuration.load_or_initialize
 
-    desc "setup_project", "Setup project-level config and templates in ./.molt (current directory)"
-    long_desc "If you're working with other developers on this project, it's best to agree on the templates and have this commited to git. Now everyone gets to be lazy. 🍺"
-    def setup_project
-      config = Molt::Configuration.load_or_initialize
-      copy_templates_to_project config if !Dir.exist? Molt::MOLT_PROJECT
-    end
-
-  private
-    def copy_templates_to_home config
-      directory "bundled", Molt::MOLT_GLOBAL
-      template "sample_configs/global_config.yml.erb", Molt::CONFIG_GLOBAL, config
-    end
-
-    def copy_templates_to_project config
-      directory "bundled", Molt::MOLT_PROJECT
-      template "sample_configs/global_config.yml.erb", Molt::CONFIG_PROJECT, config
+      if !Dir.exist? molt_path
+        directory "bundled", molt_path
+        template "sample_configs/global_config.yml.erb", config_path, config
+      else
+        puts "Doing nothing. #{molt_path} is already existing.".yellow
+      end
     end
   end
 end

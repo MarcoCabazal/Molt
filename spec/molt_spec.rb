@@ -11,8 +11,8 @@ RSpec.describe Molt do
 
   it "Generates folders and files" do
     system "bundle exec molt setup"
-    system "bundle exec molt setup_project"
-    system "bundle exec bin/molt create_module SomeModule viper_table --output-folder /tmp -f"
+    system "bundle exec molt setup:project"
+    system "bundle exec bin/molt create_module SomeModule viper_table --output-folder /tmp --do-it"
     expect(Dir.exist? "./.molt").to eq(true)
     expect(Dir.exist? "/tmp/SomeModule").to eq(true)
     expect(Dir.exist? "/tmp/SomeModule/DataManagers").to eq(true)
