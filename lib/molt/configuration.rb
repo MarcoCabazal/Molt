@@ -24,10 +24,9 @@ module Molt
     end
 
     def self.apply_cli_overrides config, options, module_name, template_set
-      config["developer"]["company"] = options.company if options.company
       config["developer"]["name"] = options.name if options.name
       config["developer"]["email"] = options.email if options.email
-      config["developer"]["name"] = options.name if options.name
+      config["developer"]["company"] = options.company if options.company
       config["project"]["name"] = options.project if options.project
       config["model"] = "#{options.model}Model" || "<# Model #>"
       config["entity"] = options.model || "<# Entity #>"

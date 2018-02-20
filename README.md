@@ -3,7 +3,7 @@ Molt
 
 Molt is a simple VIPER module generator for Swift apps. 
 
-[![Build Status](https://travis-ci.org/MarcoCabazal/Molt.svg?branch=development)](https://travis-ci.org/MarcoCabazal/Molt) [![CircleCI](https://circleci.com/gh/MarcoCabazal/Molt.svg?style=svg)](https://circleci.com/gh/MarcoCabazal/Molt)
+[![Gem Version](https://badge.fury.io/rb/molt.svg)](https://badge.fury.io/rb/molt) [![Build Status](https://travis-ci.org/MarcoCabazal/Molt.svg?branch=development)](https://travis-ci.org/MarcoCabazal/Molt) [![CircleCI](https://circleci.com/gh/MarcoCabazal/Molt.svg?style=svg)](https://circleci.com/gh/MarcoCabazal/Molt)
 
 ## Installation
 
