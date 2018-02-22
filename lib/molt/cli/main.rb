@@ -20,7 +20,7 @@ module Molt::CLI
         program :help, "Version", Molt::VERSION
 
         default_command :help
-        global_option("-vv", "--verbose", "Add verbosity where applicable") { $verbose = false }
+        global_option("--verbose", "Add verbosity where applicable") { $verbose = false }
 
         command :setup do |c|
           c.syntax = 'molt setup'
