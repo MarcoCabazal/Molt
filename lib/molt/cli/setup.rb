@@ -5,7 +5,8 @@ module Molt::CLI
     include Thor::Actions
 
     def self.source_root
-      File.dirname(".")
+      gem_root = File.join(File.dirname(__FILE__), "../../..")
+      File.expand_path(gem_root)
     end
 
     desc "perform", "perform"
@@ -13,7 +14,7 @@ module Molt::CLI
       config = molt_path == Molt::MOLT_GLOBAL ? Molt::Configuration.defaults_from_git_config : Molt::Configuration.load_or_initialize
 
       if !Dir.exist? molt_path
-        directory "bundled", molt_path
+        directory "bundle", molt_path
         template "sample_configs/global_config.yml.erb", config_path, config
       else
         puts "Doing nothing. #{molt_path} is already existing.".yellow
