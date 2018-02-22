@@ -9,7 +9,7 @@
 final class FriendPresenter {
 
   weak var view: FriendViewProtocol?
-  var wireFrame: FriendWireFrameProtocol?
+  var wireframe: FriendWireframeProtocol?
   var dataSource: FriendModel?
 }
 

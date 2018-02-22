@@ -1,9 +1,8 @@
-//
-//  {{ module_name }}WireFrame.swift
-{% include 'header' %}
+{% if target != "xcode" %}{% assign filename_suffix = "Wireframe.swift" %}{% include 'header' %}{% else %}//___FILEHEADER___{% endif %}
+
 import UIKit
 
-final class {{ module_name }}WireFrame {
+final class {{ module_name }}Wireframe {
 
   static func prepareModule() -> UIViewController {
     let navController = UINavigationController.instantiate(from: .main, identifier: "mainNavigationController")
@@ -14,14 +13,14 @@ final class {{ module_name }}WireFrame {
 
     let presenter: {{ module_name }}PresenterProtocol & {{ module_name }}InteractorOutputProtocol = {{ module_name }}Presenter()
     let interactor: {{ module_name }}InteractorProtocol = {{ module_name }}Interactor()
-    let wireFrame: {{ module_name }}WireFrameProtocol = {{ module_name }}WireFrame()
+    let wireframe: {{ module_name }}WireframeProtocol = {{ module_name }}Wireframe()
     let localDataManager: {{ module_name }}LocalDataManagerProtocol = {{ module_name }}LocalDataManager()
     let remoteDataManager: {{ module_name }}RemoteDataManagerProtocol = {{ module_name }}RemoteDataManager()
 
     // INTEGRATION
     view.presenter = presenter
     presenter.view = view
-    presenter.wireFrame = wireFrame
+    presenter.wireframe = wireframe
     presenter.interactor = interactor
     interactor.presenter = presenter
     interactor.localDataManager = localDataManager
@@ -32,12 +31,12 @@ final class {{ module_name }}WireFrame {
 }
 
 // MARK: NAVIGATION
-extension {{ module_name }}WireFrame: {{ module_name }}WireFrameProtocol {
+extension {{ module_name }}Wireframe: {{ module_name }}WireframeProtocol {
 
   func navigate(to object: {{ model }}, from view: {{ module_name }}ViewProtocol) {
     guard let sourceView = view as? UIViewController else { return }
 
-    let detailVC = {{ module_name }}DetailWireFrame.prepareModule(with: object)
-    sourceView.navigationController?.pushViewController(detailVC, animated: true)
+//    let detailVC = {{ module_name }}DetailWireframe.prepareModule(with: object)
+//    sourceView.navigationController?.pushViewController(detailVC, animated: true)
   }
 }

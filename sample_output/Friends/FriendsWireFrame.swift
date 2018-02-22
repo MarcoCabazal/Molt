@@ -1,5 +1,5 @@
 //
-//  FriendsWireFrame.swift
+//  FriendsWireframe.swift
 //  CapoRegime
 //
 //  Created by Tom Hagen on 19/02/2018.

@@ -1,6 +1,5 @@
-//
-//  {{ module_name }}View.swift
-{% include 'header' %}
+{% if target != "xcode" %}{% assign filename_suffix = "View.swift" %}{% include 'header' %}{% else %}//___FILEHEADER___{% endif %}
+
 import UIKit
 
 class {{ module_name }}View: UIViewController {

@@ -9,7 +9,7 @@
 final class FriendsPresenter {
 
   weak var view: FriendsViewProtocol?
-  var wireFrame: FriendsWireFrameProtocol?
+  var wireframe: FriendsWireframeProtocol?
   var interactor: FriendsInteractorProtocol?
   var dataSource: [FriendModel] = []
 }
@@ -34,7 +34,7 @@ extension FriendsPresenter: FriendsPresenterProtocol {
 
   func process(object: FriendModel) {
     guard let view = view else { return }
-    wireFrame?.navigate(to: object, from: view)
+    wireframe?.navigate(to: object, from: view)
   }
 }
 

@@ -1,6 +1,5 @@
-//
-//  {{ module_name }}RemoteDataManager.swift
-{% include 'header' %}
+{% if target != "xcode" %}{% assign filename_suffix = "RemoteDataManager.swift" %}{% include 'header' %}{% else %}//___FILEHEADER___ {% endif %}
+
 import Alamofire
 import AlamofireObjectMapper
 import Hydra
@@ -10,10 +9,9 @@ class {{ module_name }}RemoteDataManager: {{ module_name }}RemoteDataManagerProt
 
   func retrieveDataFromAPI() -> Promise<[{{ model }}]> {
     return Promise<[{{ model }}]>(in: .background) { resolve, reject, _ in
-      Alamofire.request(APIRouter.{{ model | downcase }})
+      Alamofire.request(APIRouter.<# Enum Key #>)
         .validate()
-        .responseArray(keyPath: "{{ model | downcase }}") { (response: DataResponse<[{{ model }}]>) in
-
+        .responseArray(keyPath: "<# JSON KeyPath #>") { (response: DataResponse<[{{ model }}]>) in
           switch response.result {
           case .success(let data):
             resolve(data)

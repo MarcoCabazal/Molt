@@ -24,18 +24,30 @@ module Molt
     end
 
     def self.apply_cli_overrides config, options, module_name, template_set
+      config["template_set"] = template_set
+      config["target"] = "raw"
+
       config["developer"]["name"] = options.name if options.name
       config["developer"]["email"] = options.email if options.email
       config["developer"]["company"] = options.company if options.company
       config["project"]["name"] = options.project if options.project
+
+      config["module_name"] = module_name
       config["model"] = "#{options.model}Model" || "<# Model #>"
       config["entity"] = options.model || "<# Entity #>"
 
-      # meta
-      config["module_name"] = module_name
-      config["template_set"] = template_set
       config["year"] = Time.now.strftime("%Y")
       config["date"] = Time.now.strftime("%d/%m/%Y")
+      config
+    end
+
+    def self.config_for_xcode config, options, module_name, template_set
+      config["template_set"] = template_set
+      config["target"] = "xcode"
+
+      config["module_name"] = "___VARIABLE_productName:identifier___"
+      config["model"] = "___VARIABLE_MODEL___Model"
+      config["entity"] = "___VARIABLE_MODEL___"
       config
     end
   end

@@ -1,6 +1,5 @@
-//
-//  {{ module_name }}Interactor.swift
-{% include 'header' %}
+{% if target != "xcode" %}{% assign filename_suffix = "Interactor.swift" %}{% include 'header' %}{% else %}//___FILEHEADER___{% endif %}
+
 final class {{ module_name }}Interactor {
   weak var presenter: {{ module_name }}InteractorOutputProtocol?
   var localDataManager: {{ module_name }}LocalDataManagerProtocol?

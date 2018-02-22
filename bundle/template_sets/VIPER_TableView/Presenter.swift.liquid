@@ -1,10 +1,9 @@
-//
-//  {{ module_name }}Presenter.swift
-{% include 'header' %}
+{% if target != "xcode" %}{% assign filename_suffix = "Presenter.swift" %}{% include 'header' %}{% else %}//___FILEHEADER___{% endif %}
+
 final class {{ module_name }}Presenter {
 
   weak var view: {{ module_name }}ViewProtocol?
-  var wireFrame: {{ module_name }}WireFrameProtocol?
+  var wireframe: {{ module_name }}WireframeProtocol?
   var interactor: {{ module_name }}InteractorProtocol?
   var dataSource: [{{ model }}] = []
 }
@@ -29,7 +28,7 @@ extension {{ module_name }}Presenter: {{ module_name }}PresenterProtocol {
 
   func process(object: {{ model }}) {
     guard let view = view else { return }
-    wireFrame?.navigate(to: object, from: view)
+    wireframe?.navigate(to: object, from: view)
   }
 }
 

@@ -17,7 +17,7 @@ class FriendsRemoteDataManager: FriendsRemoteDataManagerProtocol {
     return Promise<[FriendModel]>(in: .background) { resolve, reject, _ in
       Alamofire.request(APIRouter.friendmodel)
         .validate()
-        .responseArray(keyPath: "friendmodel") { (response: DataResponse<[FriendModel]>) in
+        .responseArray(keyPath: "friends") { (response: DataResponse<[FriendModel]>) in
 
           switch response.result {
           case .success(let data):

@@ -12,7 +12,7 @@ import Hydra
 // MARK: Called by VIEW -> Implemented BY PRESENTER
 protocol FriendsPresenterProtocol: class {
   var view: FriendsViewProtocol? { get set }
-  var wireFrame: FriendsWireFrameProtocol? { get set }
+  var wireframe: FriendsWireframeProtocol? { get set }
   var interactor: FriendsInteractorProtocol? { get set }
 
   func viewDidLoad()
@@ -57,7 +57,7 @@ protocol FriendsViewProtocol: Loadable {
 }
 
 // MARK: PRESENTER -> WIREFRAME
-protocol FriendsWireFrameProtocol: class {
+protocol FriendsWireframeProtocol: class {
   static func prepareModule() -> UIViewController
   func navigate(to object: FriendModel, from view: FriendsViewProtocol)
 }

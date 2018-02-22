@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    molt (0.1.4)
+    molt (0.2.0)
       commander
       liquid (~> 4.0.0)
       terminal-table

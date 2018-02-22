@@ -51,7 +51,7 @@ module Molt::CLI
         command :create_module do |c|
           c.syntax = 'molt create_module MODULE_NAME TEMPLATE_SET'
           c.summary = "Generate component files for a VIPER module"
-          c.description = Molt::LONG_DESC
+          c.description = Molt::LONG_DESC_CREATE_MODULE
           c.option '--name NAME', String, "Author name"
           c.option '--email EMAIL', String, "Author email"
           c.option '--company COMPANY', String, "Author company"
@@ -62,12 +62,23 @@ module Molt::CLI
           c.option '--do-it', false, "Release the Kraken and write the files"
           c.action do |args, options|
             options.default :output_folder => "."
-            puts "ARGS #{args}\nOPTS #{options.inspect}"
             Molt::CLI::Generator.create_module(args[0], args[1], options)
           end
         end
         alias_command :'c', :create_module
 
+        command :xcode do |c|
+          c.syntax = 'molt xcode TEMPLATE_SET'
+          c.summary = "Export template set as Xcode template"
+          c.description = Molt::LONG_DESC_XCODE
+          c.option '--output-folder DIRECTORY', String, "Create module folder in this directory. Defaults to \"./\""
+          c.option '--do-it', false, "Release the Kraken and write the files"
+          c.action do |args, options|
+            options.default :output_folder => "."
+            Molt::CLI::Generator.create_module("", args[0], options, true)
+          end
+        end
+        alias_command :'c', :create_module
       end
     end
   end

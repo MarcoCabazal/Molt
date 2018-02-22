@@ -1,10 +1,9 @@
-//
-//  {{ module_name }}Interactor.swift
-{% include 'header' %}
+{% if target != "xcode" %}{% assign filename_suffix = "Presenter.swift" %}{% include 'header' %}{% else %}//___FILEHEADER___{% endif %}
+
 final class {{ module_name }}Presenter {
 
   weak var view: {{ module_name }}ViewProtocol?
-  var wireFrame: {{ module_name }}WireFrameProtocol?
+  var wireframe: {{ module_name }}WireframeProtocol?
   var dataSource: {{ model }}?
 }
 

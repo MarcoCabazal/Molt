@@ -1,13 +1,12 @@
-//
-//  {{ module_name }}Protocols.swift
-{% include 'header' %}
+{% if target != "xcode" %}{% assign filename_suffix = "Protocols.swift" %}{% include 'header' %}{% else %}//___FILEHEADER___{% endif %}
+
 import UIKit
 import Hydra
 
 // MARK: Called by VIEW -> Implemented BY PRESENTER
 protocol {{ module_name }}PresenterProtocol: class {
   var view: {{ module_name }}ViewProtocol? { get set }
-  var wireFrame: {{ module_name }}WireFrameProtocol? { get set }
+  var wireframe: {{ module_name }}WireframeProtocol? { get set }
   var interactor: {{ module_name }}InteractorProtocol? { get set }
 
   func viewDidLoad()
@@ -15,7 +14,7 @@ protocol {{ module_name }}PresenterProtocol: class {
   // datasource
   var numberOfSection: Int { get }
   func numberOfRows(in section: Int) -> Int
-  func content(at row: Int) -> <{{ model }}>?
+  func content(at row: Int) -> {{ model }}?
 
   func process(object: {{ model }})
 }
@@ -52,7 +51,7 @@ protocol {{ module_name }}ViewProtocol: Loadable {
 }
 
 // MARK: PRESENTER -> WIREFRAME
-protocol {{ module_name }}WireFrameProtocol: class {
+protocol {{ module_name }}WireframeProtocol: class {
   static func prepareModule() -> UIViewController
   func navigate(to object: {{ model }}, from view: {{ module_name }}ViewProtocol)
 }

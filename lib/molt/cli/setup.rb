@@ -5,8 +5,7 @@ module Molt::CLI
     include Thor::Actions
 
     def self.source_root
-      gem_root = File.join(File.dirname(__FILE__), "../../..")
-      File.expand_path(gem_root)
+      Molt::ROOT
     end
 
     desc "perform", "perform"

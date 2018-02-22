@@ -1,5 +1,5 @@
 //
-//  FriendWireFrame.swift
+//  FriendWireframe.swift
 //  CapoRegime
 //
 //  Created by Tom Hagen on 19/02/2018.
@@ -8,18 +8,18 @@
 
 import UIKit
 
-final class FriendWireFrame: FriendWireFrameProtocol {
+final class FriendWireframe: FriendWireframeProtocol {
 
   static func prepareModule(with object: FriendModel) -> UIViewController {
     let view = FriendView.instantiate(from: .main)
 
     let presenter: FriendPresenterProtocol = FriendPresenter()
-    let wireFrame = FriendWireFrame()
+    let wireframe = FriendWireframe()
 
     view.presenter = presenter
     presenter.view = view
     presenter.dataSource = object
-    presenter.wireFrame = wireFrame
+    presenter.wireframe = wireframe
 
     return view
   }

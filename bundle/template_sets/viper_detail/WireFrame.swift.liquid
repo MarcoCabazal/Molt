@@ -1,20 +1,19 @@
-//
-//  {{ module_name }}WireFrame.swift
-{% include 'header' %}
+{% if target != "xcode" %}{% assign filename_suffix = "Wireframe.swift" %}{% include 'header' %}{% else %}//___FILEHEADER___{% endif %}
+
 import UIKit
 
-final class {{ module_name }}WireFrame: {{ module_name }}WireFrameProtocol {
+final class {{ module_name }}Wireframe: {{ module_name }}WireframeProtocol {
 
   static func prepareModule(with object: {{ model }}) -> UIViewController {
     let view = {{ module_name }}View.instantiate(from: .main)
 
     let presenter: {{ module_name }}PresenterProtocol = {{ module_name }}Presenter()
-    let wireFrame = {{ module_name }}WireFrame()
+    let wireframe = {{ module_name }}Wireframe()
 
     view.presenter = presenter
     presenter.view = view
     presenter.dataSource = object
-    presenter.wireFrame = wireFrame
+    presenter.wireframe = wireframe
 
     return view
   }

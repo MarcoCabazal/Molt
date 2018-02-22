@@ -1,11 +1,14 @@
 module Molt::CLI
   class Generator
 
-    def self.create_module(module_name, template_set, options)
-      puts "OPTIONS #{options.inspect}".blue
+    def self.create_module(module_name, template_set, options, xcode = false)
       config = Molt::Configuration.load_or_initialize
-      config = Molt::Configuration.apply_cli_overrides config, options, module_name, template_set
-      rows = table_rows_for config
+      if !xcode
+        config = Molt::Configuration.apply_cli_overrides config, options, module_name, template_set
+      else
+        config = Molt::Configuration.config_for_xcode config, options, module_name, template_set
+      end
+      rows = table_rows_for config, xcode
 
       sets = ""
       models = ""
@@ -20,14 +23,17 @@ module Molt::CLI
 
       Dir["#{sets}/#{template_set}/**/*swift.liquid"].each do |template_file|
         template_base_folder = File.dirname(template_file).gsub(/#{sets}\/#{template_set}/, "")
-        destination_folder = "#{options.output_folder}/#{module_name}#{template_base_folder}"
+        destination_folder = "#{options.output_folder}/#{module_name}#{template_base_folder}" if !xcode
+        destination_folder = File.expand_path("~/Library/Developer/Xcode/Templates/File Templates/Molt/#{template_set.gsub(/_/, " ")}.xctemplate") if xcode
 
         base_file = File.basename(template_file.gsub(/.liquid$/, ""))
-        output_file = "#{destination_folder}/#{module_name}#{base_file}"
+        output_file = "#{destination_folder}/#{module_name}#{base_file}" if !xcode
+        output_file = "#{destination_folder}/___FILEBASENAME___#{base_file}" if xcode
         rows << [template_file.gsub(/#{sets}\//, ""), output_file.blue]
 
         if options.do_it
           FileUtils.mkdir_p destination_folder
+          FileUtils.cp Dir.glob("#{Molt::ROOT}/sample_configs/Template*"), destination_folder
           Molt::Template.liquify(template: template_file, output_file: output_file, config: config)
         end
       end
@@ -55,14 +61,16 @@ module Molt::CLI
     end
 
     private
-    def self.table_rows_for config
+    def self.table_rows_for config, xcode
       rows = []
-      rows << ["Developer", config["developer"]["name"].blue]
-      rows << ["Email", config["developer"]["email"].blue]
-      rows << ["Company", config["developer"]["company"].blue]
-      rows << ["Project", config["project"]["name"].blue]
 
-      rows << [" ", " "]
+      if !xcode
+        rows << ["Developer", config["developer"]["name"].blue]
+        rows << ["Email", config["developer"]["email"].blue]
+        rows << ["Company", config["developer"]["company"].blue]
+        rows << ["Project", config["project"]["name"].blue]
+        rows << [" ", " "]
+      end
       rows << ["Template Set", config["template_set"].yellow]
       rows << [" ", " "]
       rows << ["Source".green, "Destination".green]

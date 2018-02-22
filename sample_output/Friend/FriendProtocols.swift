@@ -11,7 +11,7 @@ import UIKit
 // MARK: Called by VIEW -> Implemented BY PRESENTER
 protocol FriendPresenterProtocol: class {
   weak var view: FriendViewProtocol? { get set }
-  weak var wireFrame: FriendWireFrameProtocol? { get set }
+  weak var wireframe: FriendWireframeProtocol? { get set }
   var dataSource: FriendModel? { get set }
 
   func viewDidLoad()
@@ -23,6 +23,6 @@ protocol FriendViewProtocol: Loadable {
 }
 
 // MARK: PRESENTER -> WIREFRAME
-protocol FriendWireFrameProtocol: class {
+protocol FriendWireframeProtocol: class {
   static func prepareModule(with object: FriendModel) -> UIViewController
 }

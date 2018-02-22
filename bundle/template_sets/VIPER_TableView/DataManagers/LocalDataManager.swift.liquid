@@ -1,6 +1,5 @@
-//
-//  {{ module_name }}LocalDataManager.swift
-{% include 'header' %}
+{% if target != "xcode" %}{% assign filename_suffix = "LocalDataManager.swift" %}{% include 'header' %}{% else %}//___FILEHEADER___{% endif %}
+
 import CoreData
 import Hydra
 
