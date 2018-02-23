@@ -1,8 +1,7 @@
 require "commander"
 require "fileutils"
-require "liquid"
 require "terminal-table"
-require "yaml"
+require "generamba/string-colorize.rb"
 
 require "molt/cli/setup"
 require "molt/cli/template_sets"
@@ -78,7 +77,7 @@ module Molt::CLI
             Molt::CLI::Generator.create_module("", args[0], options, true)
           end
         end
-        alias_command :'c', :create_module
+        alias_command :'x', :xcode
       end
     end
   end

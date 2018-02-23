@@ -1,4 +1,5 @@
 require "thor"
+require "molt/helpers/configuration"
 
 module Molt::CLI
   class Setup < Thor

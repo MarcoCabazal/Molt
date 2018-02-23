@@ -1,3 +1,5 @@
+require "yaml"
+
 module Molt
   class Configuration
     def self.load_or_initialize

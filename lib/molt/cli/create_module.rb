@@ -1,3 +1,7 @@
+require "liquid"
+require "molt/helpers/configuration"
+require "molt/helpers/exporter"
+
 module Molt::CLI
   class Generator
 
@@ -23,6 +27,7 @@ module Molt::CLI
 
       Dir["#{sets}/#{template_set}/**/*swift.liquid"].each do |template_file|
         template_base_folder = File.dirname(template_file).gsub(/#{sets}\/#{template_set}/, "")
+
         destination_folder = "#{options.output_folder}/#{module_name}#{template_base_folder}" if !xcode
         destination_folder = File.expand_path("~/Library/Developer/Xcode/Templates/File Templates/Molt/#{template_set.gsub(/_/, " ")}.xctemplate") if xcode
 
@@ -33,8 +38,8 @@ module Molt::CLI
 
         if options.do_it
           FileUtils.mkdir_p destination_folder
-          FileUtils.cp Dir.glob("#{Molt::ROOT}/sample_configs/Template*"), destination_folder
-          Molt::Template.liquify(template: template_file, output_file: output_file, config: config)
+          FileUtils.cp Dir.glob("#{Molt::ROOT}/sample_configs/Template*"), destination_folder if xcode
+          Molt::Exporter.liquify(template: template_file, output_file: output_file, config: config)
         end
       end
 
@@ -50,7 +55,7 @@ module Molt::CLI
 
           if options.do_it
             FileUtils.mkdir_p destination_folder
-            Molt::Template.liquify(template: template_file, output_file: output_file, config: config)
+            Molt::Exporter.liquify(template: template_file, output_file: output_file, config: config)
           end
         end
       end

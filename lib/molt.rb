@@ -1,8 +1,5 @@
-require "molt/version"
-require "molt/configuration"
-require "molt/template"
-require "molt/cli/main"
-require "generamba/string-colorize"
+require "molt/version.rb"
+require "molt/cli/main.rb"
 
 module Molt
   ROOT = File.expand_path(File.join(File.dirname(__FILE__), ".."))
