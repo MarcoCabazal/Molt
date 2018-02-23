@@ -1,5 +1,7 @@
 {% if target != "xcode" %}{% assign filename_suffix = "Presenter.swift" %}{% include 'header' %}{% else %}//___FILEHEADER___{% endif %}
 
+import UIKit
+
 final class {{ module_name }}Presenter {
 
   weak var view: {{ module_name }}ViewProtocol?
@@ -27,7 +29,7 @@ extension {{ module_name }}Presenter: {{ module_name }}PresenterProtocol {
   }
 
   func process(object: {{ model }}) {
-    guard let view = view else { return }
+    guard let view = view as? UIViewController else { return }
     wireframe?.navigate(to: object, from: view)
   }
 }

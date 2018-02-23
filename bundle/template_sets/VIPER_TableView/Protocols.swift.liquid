@@ -53,5 +53,5 @@ protocol {{ module_name }}ViewProtocol: Loadable {
 // MARK: PRESENTER -> WIREFRAME
 protocol {{ module_name }}WireframeProtocol: class {
   static func prepareModule() -> UIViewController
-  func navigate(to object: {{ model }}, from view: {{ module_name }}ViewProtocol)
+  func navigate(to object: {{ model }}, from view: UIViewController)
 }

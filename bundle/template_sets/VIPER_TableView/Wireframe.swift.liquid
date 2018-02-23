@@ -33,10 +33,8 @@ final class {{ module_name }}Wireframe {
 // MARK: NAVIGATION
 extension {{ module_name }}Wireframe: {{ module_name }}WireframeProtocol {
 
-  func navigate(to object: {{ model }}, from view: {{ module_name }}ViewProtocol) {
-    guard let sourceView = view as? UIViewController else { return }
-
+  func navigate(to object: {{ model }}, from view: UIViewController) {
 //    let detailVC = {{ module_name }}DetailWireframe.prepareModule(with: object)
-//    sourceView.navigationController?.pushViewController(detailVC, animated: true)
+//    view.navigationController?.pushViewController(detailVC, animated: true)
   }
 }
