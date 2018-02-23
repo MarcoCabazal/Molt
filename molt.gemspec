@@ -1,4 +1,3 @@
-
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "molt/version"
@@ -15,6 +14,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = ">= 2.2"
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features|sample_output)/}) }
+
   spec.bindir        = "bin"
   spec.executables   = ["molt"]
   spec.require_paths = ["lib"]
@@ -24,9 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'terminal-table'
   spec.add_runtime_dependency "thor", "~> 0.20"
 
-  spec.add_development_dependency "awesome_print"
   spec.add_development_dependency "bundler", "~> 1.16"
-  spec.add_development_dependency "pry"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec", "~> 3.4"
 end

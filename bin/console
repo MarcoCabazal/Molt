@@ -2,6 +2,6 @@
 
 require "bundler/setup"
 require "molt"
-require "pry"
+require "irb"
 
-Pry.start
+IRB.start
