@@ -7,12 +7,14 @@ Molt is a simple VIPER module generator for Swift apps.
 
 ### Table of Contents
 1. [Installation](#installation)
-2. [Global Configuration](#global-configuration)
-3. [Per-Project Configuration](#per-project-configuration)
+    * [Global Configuration](#global-configuration)
+    * [Per-Project Configuration](#per-project-configuration)
 4. [Template Sets](#template-sets)
+    * [List available template sets](#templates-available)
+    * [Creating your own template sets](#templates-own)
 5. [Creating (generating) a module](#creation)
-6. [Additional options/overrides when generating modules](#options)
-7. [Exporting template sets as Xcode templates](#xcode)
+    * [Additional options/overrides when generating modules](#options)
+    * [Exporting template sets as Xcode templates](#xcode)
 8. [Notes about the bundled `VIPER_TableView` template set](#notes)
 9. [TODOs](#todos)
 10. [Contributing](#contributing)
@@ -24,7 +26,7 @@ Molt is a simple VIPER module generator for Swift apps.
 
     $ gem install molt
 
-## Global Configuration <a name="global-configuration"></a>
+### Global Configuration <a name="global-configuration"></a>
 
 To initialize global configuration in `~/.molt`:
 
@@ -69,7 +71,7 @@ You should customize this with your information before you proceed with generati
     project:
       name: CapoRegime
 
-## Per-Project Configuration <a name="per-project-configuration"></a>
+### Per-Project Configuration <a name="per-project-configuration"></a>
 
 On the other hand, to setup per-project configuration, go to your project's root folder, then:
 
@@ -107,7 +109,7 @@ Template sets are groups of [Liquid](https://shopify.github.io/liquid/) template
 
 The template system makes use of `Liquid` and supports partials which are located in `.molt/partials`.
 
-To list available template sets (search order: current project directory, global, bundled):
+### To list available template sets (search order: current project directory, global, bundled): <a name="templates-available"></a>
 
     $ molt template_sets
     ./.molt:
@@ -121,7 +123,7 @@ To list available template sets (search order: current project directory, global
     Add --verbose to list all files in each template set
 
 
-To list available template sets and the template files they contain:
+### To list available template sets and the template files they contain: <a name="templates-verbose"></a>
 
     $ molt template_sets --verbose
     ./.molt:
@@ -156,6 +158,10 @@ To list available template sets and the template files they contain:
     ~/.molt/template_sets/VIPER_Detail/View.swift.liquid
     ~/.molt/template_sets/VIPER_Detail/Wireframe.swift.liquid
 
+### Creating your own template sets <a name="templates-own"></a>
+
+Just duplicate the respective folders under `~/.molt/template_sets`, rename the folder, then customize to suit your taste. 
+
 ## Creating (generating) a module <a name="creation"></a>
 
     $ molt create_module Friends VIPER_TableView
@@ -181,7 +187,7 @@ To list available template sets and the template files they contain:
 
 Note that generating a new module will never touch your Xcode project, but it's just a matter of dragging the resulting folder onto Xcode. 
 
-## Additional options/overrides when generating modules <a name="options"></a>
+### Additional options/overrides when generating modules <a name="options"></a>
 
     $ molt help create_module
     Usage:
@@ -197,7 +203,7 @@ Note that generating a new module will never touch your Xcode project, but it's 
         -create-model              # If specified, it creates corresponding Mappable struct (ObjectMapper) and Core Data entity; requires --model to be set
         -do-it                     # Release the Kraken and write the files
 
-## Exporting template sets as Xcode templates <a name="xcode"></a>
+### Exporting template sets as Xcode templates <a name="xcode"></a>
 
     $ molt xcode VIPER_TableView 
     +-------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
